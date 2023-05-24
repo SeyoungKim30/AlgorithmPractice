@@ -22,9 +22,10 @@ public class test_0517 {
 	      return 0;
     }
 	
-	int[][] solution2(int n, int[][] signs){
+	static int[][] solution2(int n, int[][] signs){
+		List<Integer> temps = new ArrayList<>(); 
 		for (int start = 0; start < n; start++) {
-	        List<Integer> temps = new ArrayList<>();
+		//한줄씩
 	        for (int i = 0; i < n; i++) {
 	            if (signs[start][i] == 1) {
 	                temps.add(i);
@@ -42,10 +43,35 @@ public class test_0517 {
 	        }
     }
     return signs;
-
 }
-	   
+	
+	static int[][] solution22(int n, int[][] signs){
+		for(int row=0;row<n;row++) {
+			dfs(row,row,n,signs);
+		}
+    return signs;
+}
+
+	static void dfs(int row,int start, int n,int[][] signs) {
+		//어딘가로 갈 수 있으면 바꾸고 row에 0을 1로 바꿈
+		for(int des=0;des<n;des++) {
+			if(signs[start][des]==1&&signs[row][des]==0) {
+			//직항말고 갈아타서 갈 수 있을때만, 직항가능이면 바로 종료
+				signs[row][des]=1;
+				dfs(row,des,n,signs);
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
+		int[][] signs= {{0,1,0},{0,0,1},{1,0,0}};
+		int[][] sol1= solution2(3,signs);
+		int[][] sol2= solution22(3,signs);
 		
+		for(int i=0;i<3;i++) {
+			for(int j=0;j<3;j++) {
+				System.out.println(sol1[i][j]==sol2[i][j]);
+			}
+		}
 	}
 }
